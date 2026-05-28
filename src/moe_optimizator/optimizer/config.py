@@ -8,7 +8,7 @@ from pathlib import Path
 
 @dataclass
 class SearchSpace:
-    """Grid values for phase 2 (comma-separated lists become bench sweeps)."""
+    """Grid values for phase 1 inference tuning (comma-separated → bench sweeps)."""
 
     n_gpu_layers: list[int] = field(default_factory=lambda: [99])
     n_threads: list[int] = field(default_factory=lambda: [4, 8, 16])

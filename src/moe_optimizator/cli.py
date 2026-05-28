@@ -24,7 +24,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     opt = sub.add_parser(
         "optimize",
-        help="Двухфазная оптимизация: ctx_max, затем inference-флаги (CLI)",
+        help="Двухфазная оптимизация: inference, затем ctx_max (CLI)",
     )
     opt.add_argument("-m", "--model", type=Path, required=True, help="Путь к GGUF")
     opt.add_argument(
@@ -46,10 +46,21 @@ def build_parser() -> argparse.ArgumentParser:
         help="Каталог отчёта",
     )
     opt.add_argument(
+        "--skip-tuning",
+        action="store_true",
+        help="Пропустить фазу 1 (подбор inference), взять значения по умолчанию",
+    )
+    opt.add_argument(
+        "--skip-ctx-search",
+        type=int,
+        metavar="CTX",
+        help="Пропустить фазу 2 (поиск ctx_max), использовать заданное значение",
+    )
+    opt.add_argument(
         "--skip-phase1",
         type=int,
         metavar="CTX",
-        help="Пропустить поиск ctx_max, использовать заданное значение",
+        help=argparse.SUPPRESS,
     )
 
     return parser
@@ -90,9 +101,14 @@ def cmd_optimize(args: argparse.Namespace) -> int:
         def on_log(self, line: str) -> None:
             _log(line)
 
+    skip_ctx = args.skip_ctx_search
+    if args.skip_phase1 is not None:
+        skip_ctx = args.skip_phase1
+
     result = run_optimization(
         config,
-        skip_phase1=args.skip_phase1,
+        skip_tuning=args.skip_tuning,
+        skip_ctx_search=skip_ctx,
         progress=_CliProgress(),
     )
     print(f"Записей: {len(result.records)}, конфигураций: {len(result.ranked)}")

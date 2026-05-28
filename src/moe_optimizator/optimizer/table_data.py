@@ -32,6 +32,7 @@ def ranking_table_rows(
                 "pg@ctx": _fmt(metrics.get("pg@ctx")),
                 "tg@cold": _fmt(metrics.get("tg@cold")),
                 "pp@cold": _fmt(metrics.get("pp@cold")),
+                "pg@cold": _fmt(metrics.get("pg@cold")),
                 "score": round(score, 2),
             }
         )
@@ -68,6 +69,9 @@ def best_record(
     key = ranked[0][0]
     for rec in records:
         if _config_key(rec) == key and rec.is_tg and rec.n_depth == ctx_max:
+            return rec
+    for rec in records:
+        if _config_key(rec) == key and rec.is_tg:
             return rec
     return records[0] if records else None
 

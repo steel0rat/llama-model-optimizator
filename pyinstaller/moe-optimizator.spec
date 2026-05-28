@@ -12,17 +12,22 @@ gui_dir = src / "moe_optimizator" / "gui"
 
 pyside_hidden = collect_submodules("PySide6")
 pyside_datas = collect_data_files("PySide6")
+mpl_hidden = collect_submodules("matplotlib")
+mpl_datas = collect_data_files("matplotlib")
 
 a = Analysis(
     [str(gui_dir / "__main__.py")],
     pathex=[str(src)],
     binaries=[],
-    datas=pyside_datas + [(str(gui_dir / "styles.qss"), "moe_optimizator/gui")],
+    datas=pyside_datas + mpl_datas + [(str(gui_dir / "styles.qss"), "moe_optimizator/gui")],
     hiddenimports=[
         "moe_optimizator.gui.app",
         "moe_optimizator.gui.main_window",
         "moe_optimizator.gui.worker",
+        "moe_optimizator.gui.charts",
+        "matplotlib.backends.backend_qtagg",
         *pyside_hidden,
+        *mpl_hidden,
     ],
     hookspath=[],
     hooksconfig={},

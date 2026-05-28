@@ -36,6 +36,7 @@ from moe_optimizator.executables import (
     llama_bench_not_found_message,
     resolve_executable,
 )
+from moe_optimizator.gui.charts import ChartsPanel
 from moe_optimizator.gui.worker import OptimizationWorker
 from moe_optimizator.models_catalog import format_model_choice, list_gguf_models
 from moe_optimizator.optimizer.cancel import CancelToken
@@ -242,8 +243,10 @@ class MainWindow(QMainWindow):
         tabs = QTabWidget()
         self._rank_table = QTableWidget()
         self._detail_table = QTableWidget()
+        self._charts = ChartsPanel()
         tabs.addTab(self._rank_table, "Рейтинг конфигураций")
         tabs.addTab(self._detail_table, "Все прогоны")
+        tabs.addTab(self._charts, "Графики")
         right_layout.addWidget(tabs, stretch=3)
 
         splitter.addWidget(right)
@@ -332,6 +335,7 @@ class MainWindow(QMainWindow):
 
         self._persist()
         self._log.clear()
+        self._charts.clear()
         self._cancel = CancelToken()
         self._btn_start.setEnabled(False)
         self._btn_stop.setEnabled(True)
@@ -371,6 +375,7 @@ class MainWindow(QMainWindow):
         self._progress.setValue(100)
         self._fill_table(self._rank_table, ranking_table_rows(result.ranked))
         self._fill_table(self._detail_table, records_table_rows(result.records))
+        self._charts.plot_result(result)
         self._append_log(f"Отчёт: {result.report_path}")
 
     def _on_failed(self, msg: str) -> None:

@@ -16,6 +16,6 @@ def test_parse_bench_json():
 
 def test_rank_prefers_higher_tg_at_ctx():
     records = parse_bench_json(FIXTURE.read_text())
-    ranked = rank_configurations(records, ctx_max=65536)
+    ranked = rank_configurations(records, 65536)
     assert ranked[0][1]["tg@ctx"] == 128.0
     assert ranked[0][1]["tg@ctx"] > ranked[1][1]["tg@ctx"]

@@ -74,25 +74,32 @@ def server_flags_from_record(rec: BenchRecord, *, ctx_size: int, parallel: int =
 def build_report(
     *,
     ctx_max: int,
+    tuning_depth: int,
+    best_config: tuple,
     records: list[BenchRecord],
     ranked: list[tuple],
     output_dir: Path,
 ) -> Path:
     """Write JSON report with all metrics and best server command."""
     output_dir.mkdir(parents=True, exist_ok=True)
-    best_group = ranked[0] if ranked else None
-    best_rec = None
-    if best_group:
-        from moe_optimizator.optimizer.phases import _config_key
+    from moe_optimizator.optimizer.phases import _config_key
 
-        key = best_group[0]
+    best_rec = None
+    if best_config:
         for rec in records:
-            if _config_key(rec) == key and rec.is_tg and rec.n_depth == ctx_max:
+            if _config_key(rec) == best_config and rec.is_tg and rec.n_depth == ctx_max:
                 best_rec = rec
                 break
+        if best_rec is None:
+            for rec in records:
+                if _config_key(rec) == best_config and rec.is_tg:
+                    best_rec = rec
+                    break
 
     report = {
         "ctx_max": ctx_max,
+        "tuning_depth": tuning_depth,
+        "best_config": best_config,
         "server_parallel": 1,
         "records": records_to_rows(records),
         "ranking": [
@@ -107,5 +114,3 @@ def build_report(
     path = output_dir / "optimization_report.json"
     path.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     return path
-
-
