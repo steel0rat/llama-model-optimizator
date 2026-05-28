@@ -1,0 +1,166 @@
+/* MOE Optimizator — тёмная тема Qt */
+
+* {
+    font-family: "Segoe UI", "SF Pro Text", system-ui, sans-serif;
+    font-size: 13px;
+}
+
+QMainWindow, QDialog {
+    background-color: #0c0f14;
+    color: #e8ecf4;
+}
+
+QGroupBox {
+    background-color: #141a24;
+    border: 1px solid #252d3d;
+    border-radius: 10px;
+    margin-top: 14px;
+    padding: 16px 12px 12px 12px;
+    font-weight: 600;
+    color: #a8b4cc;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 12px;
+    padding: 0 6px;
+    color: #7eb6ff;
+}
+
+QLineEdit, QSpinBox, QComboBox {
+    background-color: #1a2230;
+    border: 1px solid #2e3a50;
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: #f0f4fc;
+    selection-background-color: #3d6cb5;
+}
+
+QLineEdit:focus, QSpinBox:focus, QComboBox:focus {
+    border-color: #5b8def;
+}
+
+QPushButton {
+    background-color: #2a3548;
+    border: 1px solid #3a4a64;
+    border-radius: 8px;
+    padding: 9px 16px;
+    color: #e8ecf4;
+    font-weight: 500;
+}
+
+QPushButton:hover {
+    background-color: #354560;
+    border-color: #5b8def;
+}
+
+QPushButton:pressed {
+    background-color: #1e2838;
+}
+
+QPushButton#primaryBtn {
+    background-color: #3d6cb5;
+    border-color: #5b8def;
+    color: #ffffff;
+    font-weight: 600;
+    min-height: 20px;
+}
+
+QPushButton#primaryBtn:hover {
+    background-color: #4a7fd4;
+}
+
+QPushButton#stopBtn {
+    background-color: #4a2830;
+    border-color: #8b4048;
+    color: #ffc9c9;
+}
+
+QPushButton#stopBtn:hover {
+    background-color: #5c323c;
+}
+
+QProgressBar {
+    background-color: #1a2230;
+    border: none;
+    border-radius: 6px;
+    height: 10px;
+    text-align: center;
+    color: #a8b4cc;
+}
+
+QProgressBar::chunk {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #3d6cb5, stop:1 #5ec4e8);
+    border-radius: 6px;
+}
+
+QTextEdit#logView {
+    background-color: #080b10;
+    border: 1px solid #252d3d;
+    border-radius: 8px;
+    color: #b8c5dc;
+    font-family: "Cascadia Code", "SF Mono", "Consolas", monospace;
+    font-size: 12px;
+    padding: 8px;
+}
+
+QLabel#statusLabel {
+    font-size: 14px;
+    font-weight: 600;
+    color: #c8d4ec;
+}
+
+QLabel#phaseLabel {
+    color: #8899b4;
+}
+
+QTabWidget::pane {
+    border: 1px solid #252d3d;
+    border-radius: 8px;
+    background: #141a24;
+    top: -1px;
+}
+
+QTabBar::tab {
+    background: #1a2230;
+    color: #8899b4;
+    padding: 10px 18px;
+    margin-right: 2px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+QTabBar::tab:selected {
+    background: #141a24;
+    color: #7eb6ff;
+    border-bottom: 2px solid #5b8def;
+}
+
+QTableWidget {
+    background-color: #10151e;
+    alternate-background-color: #141a24;
+    gridline-color: #252d3d;
+    border: none;
+    color: #dce4f4;
+}
+
+QHeaderView::section {
+    background-color: #1a2230;
+    color: #7eb6ff;
+    padding: 8px;
+    border: none;
+    border-bottom: 2px solid #3d6cb5;
+    font-weight: 600;
+}
+
+QScrollBar:vertical {
+    background: #0c0f14;
+    width: 10px;
+}
+
+QScrollBar::handle:vertical {
+    background: #354560;
+    border-radius: 5px;
+    min-height: 24px;
+}
